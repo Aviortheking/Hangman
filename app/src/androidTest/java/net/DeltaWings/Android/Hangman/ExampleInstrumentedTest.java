@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("net.DeltaWings.Android.Pendu", appContext.getPackageName());
+        assertEquals("net.DeltaWings.Android.Hangman", appContext.getPackageName());
     }
 }

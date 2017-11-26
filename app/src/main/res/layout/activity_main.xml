@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
+        app:expanded="false"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="-1dp">
 
@@ -20,10 +21,10 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/relativeLayout"
+            android:layout_toRightOf="@+id/relativeLayout"
             android:layout_weight="1"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            android:layout_toRightOf="@+id/relativeLayout"/>
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
@@ -35,15 +36,6 @@
         android:layout_below="@+id/appBarLayout"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
-
-        <Button
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/multiplayerButton"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="92dp"
-            android:text="Button" />
 
         <Button
             android:id="@+id/multiplayerButton"
