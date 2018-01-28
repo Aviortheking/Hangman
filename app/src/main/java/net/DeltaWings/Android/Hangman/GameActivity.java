@@ -6,19 +6,26 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import static net.DeltaWings.Android.Hangman.MainActivity.instance;
+import net.DeltaWings.Android.Hangman.Util.ConnectionUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
 
-	ProgressBar progressBar;
-	AlertDialog.Builder builder;
+	private AlertDialog.Builder builder;
+	private ConnectionUtil co;
+	private List<String> letters = new ArrayList<>();
 
 	@Override
 	public void onBackPressed() {
+		builder.show();
 	}
 
 	@Override
@@ -29,9 +36,16 @@ public class GameActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_activity);
+
+		ProgressBar progressBar = findViewById(R.id.progressBar);
+		EditText input = findViewById(R.id.input);
+
+		log("Logs");
+		log("Connecting...");
+		co = new ConnectionUtil();
 
 		ActionBar actionBar = getSupportActionBar();
 		if (actionBar != null) {
@@ -39,37 +53,88 @@ public class GameActivity extends AppCompatActivity {
 			actionBar.setDisplayHomeAsUpEnabled(true);
 			actionBar.setDisplayShowHomeEnabled(true);
 		} else {
-			Toast.makeText(instance, " There is a problem here let's see what it is", Toast.LENGTH_LONG).show();
+			log("A problem occurred Please restart the application");
 		}
 
-		progressBar = findViewById(R.id.progressBar);
+
+
+
 
 		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				switch (which){
 					case DialogInterface.BUTTON_POSITIVE:
-						Toast.makeText(instance, "Selected Yes", Toast.LENGTH_LONG).show();
-						break;
+						//Close Connection
+						log("Closing connection");
+						co.closeConnection();
 
-					case DialogInterface.BUTTON_NEGATIVE:
-						Toast.makeText(instance, "Selected No", Toast.LENGTH_LONG).show();
+						//send to main menu
+						finish();
+						overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 						break;
 				}
 			}
 		};
 
+
+
+
+
+
+		//Input Management
+		input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				String text = ((EditText) v).getText().toString();
+				if(text.length() == 1) {
+					log("Letter : " + text);
+					if(letters.contains(text)) {
+						log("Letter : " + text + "Already in");
+					} else {
+						log("Sending letter " + text);
+						//Send Letter
+					}
+				} else if(text.length() > 1) {
+					log("Word : " + text);
+				}
+				return false;
+			}
+		});
+		//Input Management
+
+
+
+
+
+
+		//Return Builder
 		builder = new AlertDialog.Builder(this);
 
-		builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+		builder.setMessage("Do you really want to quit your game ?")
+				.setPositiveButton("Yes", dialogClickListener)
 				.setNegativeButton("No", dialogClickListener);
+		//Return Builder
+
+
+
+
+
+
+		log("Connected !");
+		setProgressAnimate(progressBar, 100);
 	}
 
-	private void setProgressAnimate(ProgressBar pb, int progressTo)
-	{
+
+	private void setProgressAnimate(ProgressBar pb, int progressTo) {
 		ObjectAnimator animation = ObjectAnimator.ofInt(pb, "progress", pb.getProgress(), progressTo);
 		animation.setDuration(250);
 		animation.setInterpolator(new DecelerateInterpolator());
 		animation.start();
+	}
+
+	private void log(String message) {
+		TextView logs = findViewById(R.id.logs);
+		logs.setText(logs.getText().toString() + "\n" + message);
 	}
 }
