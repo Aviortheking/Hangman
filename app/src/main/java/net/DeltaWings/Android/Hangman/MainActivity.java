@@ -3,8 +3,9 @@ package net.DeltaWings.Android.Hangman;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,9 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_main);
-	    Toolbar toolbar = findViewById(R.id.toolbar);
-	    toolbar.setTitle("Hangman");
-	    setSupportActionBar(toolbar);
+
 
 		//Multiplayer button
 	    findViewById(R.id.multiplayerButton).setOnClickListener(new View.OnClickListener() {
@@ -37,5 +36,29 @@ public class MainActivity extends AppCompatActivity {
 			    Toast.makeText(instance, "WIP", Toast.LENGTH_LONG).show();
 		    }
 	    });
+
     }
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.home, menu);
+		// return true so that the menu pop up is opened
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.navigation_options:
+				// EITHER CALL THE METHOD HERE OR DO THE FUNCTION DIRECTLY
+				startActivity(new Intent(instance, SettingsActivity.class));
+				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+				return true;
+
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
 }
