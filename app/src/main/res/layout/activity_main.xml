@@ -12,14 +12,14 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/appBarLayout"
+        android:layout_centerHorizontal="true"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        android:layout_below="@+id/appBarLayout"
-        android:layout_centerHorizontal="true">
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
         <ImageView
             android:id="@+id/imageView"
@@ -29,7 +29,7 @@
             android:adjustViewBounds="false"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            app:srcCompat="@mipmap/logo" />
+            app:srcCompat="@mipmap/logo"/>
 
         <Button
             android:id="@+id/singleplayerButton"
@@ -43,7 +43,7 @@
             android:text="@string/singleplayer"
             android:textAppearance="@style/TextAppearance.AppCompat"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
-            tools:layout_editor_absoluteX="142dp" />
+            tools:layout_editor_absoluteX="142dp"/>
 
         <Button
             android:id="@+id/multiplayerButton"
@@ -56,7 +56,7 @@
             android:text="@string/multiplayer"
             android:textAppearance="@style/TextAppearance.AppCompat"
             app:layout_constraintTop_toBottomOf="@+id/singleplayerButton"
-            tools:layout_editor_absoluteX="146dp" />
+            tools:layout_editor_absoluteX="146dp"/>
 
     </LinearLayout>
 

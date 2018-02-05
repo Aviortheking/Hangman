@@ -86,7 +86,8 @@ public class GameActivity extends AppCompatActivity {
 		input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				String text = ((EditText) v).getText().toString();
+				EditText txt = ((EditText) v);
+				String text = txt.getText().toString();
 				if(text.length() == 1) {
 					log("Letter : " + text);
 					if(letters.contains(text)) {
@@ -94,9 +95,12 @@ public class GameActivity extends AppCompatActivity {
 					} else {
 						log("Sending letter " + text);
 						//Send Letter
+						txt.setText("", TextView.BufferType.EDITABLE);
 					}
 				} else if(text.length() > 1) {
 					log("Word : " + text);
+					//Send Letter
+					txt.setText("", TextView.BufferType.EDITABLE);
 				}
 				return false;
 			}
