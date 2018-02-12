@@ -13,6 +13,11 @@ public class MainActivity extends AppCompatActivity {
 
 	public static MainActivity instance;
 
+	public static MainActivity getInstance() {
+		return instance;
+	}
+	public boolean single = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 		instance = this;

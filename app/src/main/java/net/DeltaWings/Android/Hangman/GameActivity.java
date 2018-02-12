@@ -1,6 +1,7 @@
 package net.DeltaWings.Android.Hangman;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
