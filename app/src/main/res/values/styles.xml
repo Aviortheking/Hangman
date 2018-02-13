@@ -1,13 +1,33 @@
 <resources>
 
-    <!-- Base application theme. -->
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
-
-    <style name="DeltaWings" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/colorAccent</item>
+    <style name="DeltaWings.Dark" parent="Theme.AppCompat">
+        <item name="drawable_people">@drawable/people_white</item>
+        <item name="drawable_person">@drawable/person_white</item>
     </style>
+
+    <style name="DeltaWings.Light" parent="Theme.AppCompat.Light">
+        <item name="drawable_people">@drawable/people_black</item>
+        <item name="drawable_person">@drawable/person_black</item>
+    </style>
+
+    <style name="DeltaWings.Color" parent="Theme.AppCompat.Light">
+        <item name="drawable_people">@drawable/people_black</item>
+        <item name="drawable_person">@drawable/person_black</item>
+        <item name="colorPrimary">@color/Blue</item>
+        <item name="android:textColorPrimary">@color/Grey900</item>
+        <item name="colorPrimaryDark">@color/DarkBlue</item>
+        <item name="colorAccent">@color/Indigo</item>
+        <item name="android:colorBackground">@color/Grey50</item>
+        <item name="android:colorForeground">@color/Grey900</item>
+        <item name="android:textColorPrimaryInverse">@color/White</item>
+        <item name="android:textColorSecondary">@color/Grey900</item>
+        <item name="android:textColorSecondaryInverse">@color/White</item>
+        <item name="android:windowBackground">@color/Grey50</item>
+    </style>
+
+
+    
+    <attr name="drawable_people" format="reference"/>
+    <attr name="drawable_person" format="reference"/>
 
 </resources>

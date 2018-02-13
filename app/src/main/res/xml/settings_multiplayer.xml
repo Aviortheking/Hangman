@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:defaultValue="127.0.0.1"
+        android:key="setting_ipaddress"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/setting_multi_ip"/>
+    <EditTextPreference
+        android:defaultValue="Aviortheking"
+        android:key="setting_username"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/setting_multi_username"/>
+</PreferenceScreen>

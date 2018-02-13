@@ -1,7 +1,6 @@
 package net.DeltaWings.Android.Hangman;
 
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -39,6 +38,7 @@ public class GameActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		MainActivity.setTheme(this);
 		setContentView(R.layout.game_activity);
 
 		ProgressBar progressBar = findViewById(R.id.progressBar);

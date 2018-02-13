@@ -2,18 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="net.DeltaWings.Android.Hangman">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:supportsRtl="false"
+        android:theme="@style/DeltaWings.Color">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/DeltaWings">
+            android:screenOrientation="portrait"
+            android:theme="@style/DeltaWings.Color">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -22,15 +25,18 @@
         </activity>
         <activity
             android:name=".GameActivity"
-            android:theme="@style/DeltaWings"
+            android:theme="@style/DeltaWings.Color"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
         <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings">
+            android:name=".settings.SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/DeltaWings.Dark">
         </activity>
         <activity android:name=".AboutActivity"
-                  android:theme="@style/DeltaWings">
+                  android:screenOrientation="portrait"
+                  android:theme="@style/DeltaWings.Color">
         </activity>
     </application>
 

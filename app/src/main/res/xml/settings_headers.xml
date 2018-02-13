@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+    <header android:fragment="net.DeltaWings.Android.Hangman.settings.generalOptions"
+            android:icon="@drawable/shape_outline"
+            android:title="@string/setting_general_title"
+            android:summary="@string/setting_general_desc" />
+
+    <header android:fragment="net.DeltaWings.Android.Hangman.settings.singleOptions"
+            android:icon="?attr/drawable_person"
+            android:title="@string/setting_single_title"
+            android:summary="@string/setting_single_desc" />
+
+    <header android:fragment="net.DeltaWings.Android.Hangman.settings.multiOptions"
+            android:icon="?attr/drawable_people"
+            android:title="@string/setting_multi_title"
+            android:summary="@string/setting_multi_desc" />
+
+</preference-headers>
