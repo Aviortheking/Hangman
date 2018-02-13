@@ -1,7 +1,9 @@
 package net.DeltaWings.Android.Hangman;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -15,13 +17,17 @@ import android.widget.TextView;
 import net.DeltaWings.Android.Hangman.Util.ConnectionUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class GameActivity extends AppCompatActivity {
 
 	private AlertDialog.Builder builder;
 	private ConnectionUtil co;
+	private TextView textView;
 	private List<String> letters = new ArrayList<>();
+	private Context context = this;
 
 	@Override
 	public void onBackPressed() {
@@ -41,6 +47,7 @@ public class GameActivity extends AppCompatActivity {
 		MainActivity.setTheme(this);
 		setContentView(R.layout.game_activity);
 
+		textView = findViewById(R.id.textView2);
 		ProgressBar progressBar = findViewById(R.id.progressBar);
 		EditText input = findViewById(R.id.input);
 
@@ -89,19 +96,65 @@ public class GameActivity extends AppCompatActivity {
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				EditText txt = ((EditText) v);
 				String text = txt.getText().toString();
-				if(text.length() == 1) {
-					log("Letter : " + text);
+
+
+				if(text.length() == 1) { //is letter
 					if(letters.contains(text)) {
 						log("Letter : " + text + "Already in");
 					} else {
-						log("Sending letter " + text);
+						log("Sending letter : \"" + text +"\"");
+
+						//preparing datas
+						HashMap<String, String> temp = new HashMap<>();
+						temp.put("query", "letter");
+						temp.put("letter", text);
+						co.sendData(temp);
+
+						//get result
+						HashMap<String, String> result = co.getDatas();
+						if(Objects.equals(result.get("status"), "won")) { //check if player won
+							//Game Won
+
+							DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									switch (which){
+										case DialogInterface.BUTTON_POSITIVE:
+											//Close Connection
+											Intent intent = getIntent();
+											overridePendingTransition(0, 0);
+											intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+											finish();
+
+											overridePendingTransition(0, 0);
+											startActivity(intent);
+											break;
+										default:
+											finish();
+											overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+											break;
+									}
+								}
+							};
+
+							new AlertDialog.Builder(context)
+									.setMessage("You won!")
+									.setPositiveButton("Restart", clickListener)
+									.setNegativeButton("Quit", clickListener)
+									.show();
+						}
 						//Send Letter
 						txt.setText("", TextView.BufferType.EDITABLE);
 					}
 				} else if(text.length() > 1) {
 					log("Word : " + text);
-					//Send Letter
+					HashMap<String, String> temp = new HashMap<>();
+					temp.put("query", "word");
+					temp.put("letter", text);
+					co.sendData(temp);
+
 					txt.setText("", TextView.BufferType.EDITABLE);
+
 				}
 				return false;
 			}
@@ -114,7 +167,7 @@ public class GameActivity extends AppCompatActivity {
 
 
 		//Return Builder
-		builder = new AlertDialog.Builder(this);
+		builder = new AlertDialog.Builder(context);
 
 		builder.setMessage("Do you really want to quit your game ?")
 				.setPositiveButton("Yes", dialogClickListener)

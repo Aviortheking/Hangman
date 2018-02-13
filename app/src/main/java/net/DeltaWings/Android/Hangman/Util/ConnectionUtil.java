@@ -1,8 +1,8 @@
 package net.DeltaWings.Android.Hangman.Util;
 
-import java.util.List;
 import net.DeltaWings.Android.Hangman.MainActivity;
-import net.DeltaWings.Android.Hangman.Util.GameUtil;
+
+import java.util.HashMap;
 
 public class ConnectionUtil {
 
@@ -36,7 +36,7 @@ public class ConnectionUtil {
 		
 	}
 
-	public boolean sendData(List<Object> query) {
+	public boolean sendData(HashMap<String, String> query) {
 		if(single) return gameUtil.datasReader(query);
 		else {
 			//return state
@@ -44,7 +44,7 @@ public class ConnectionUtil {
 		return false;
 	}
 
-	public Object getData() {
+	public HashMap<String, String> getDatas() {
 		if(single) {
 			return gameUtil.datasSender();
 		} else {
@@ -53,3 +53,4 @@ public class ConnectionUtil {
 		return null;
 	}
 }
+
