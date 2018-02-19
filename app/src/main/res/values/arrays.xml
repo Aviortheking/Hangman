@@ -10,9 +10,10 @@
         <item name="hard">hard</item>
     </string-array>
     <string-array name="theme">
+        <item name="color">Color</item>
         <item name="light">Light</item>
         <item name="dark">Dark</item>
-        <item name="color">Color</item>
+
     </string-array>
     <!--
         Settings

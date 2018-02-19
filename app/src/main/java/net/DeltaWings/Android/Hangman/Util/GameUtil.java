@@ -1,5 +1,6 @@
 package net.DeltaWings.Android.Hangman.Util;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -29,8 +30,6 @@ public class GameUtil {
 		returning.clear();
 		String query = datas.get("query");
 		if(Objects.equals(query, "letter")) {
-			Log.v(tag, "1");
-			Log.v(tag, "1");
 			String letter = datas.get("letter");
 			if(word.contains(letter)) {
 				Log.v(tag, "2");
@@ -43,8 +42,12 @@ public class GameUtil {
 					//winner
 					returning.put("status", "won");
 				}
+			} else {
+
 			}
-			returning.put("newWord", res.toString());
+			letters.add(letter);
+			returning.put("newWord", TextUtils.join("", res));
+			returning.put("lettersUsed", TextUtils.join(",", letters));
 		} else if (Objects.equals(query, "word")) {
 			if(Objects.equals(datas.get("word"), word)) {
 				returning.put("status", "won");

@@ -35,7 +35,6 @@ public class SettingActivity extends PreferenceActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		MainActivity.setTheme(this);
 
 		LinearLayout root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent();

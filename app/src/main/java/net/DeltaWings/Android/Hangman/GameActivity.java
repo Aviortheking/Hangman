@@ -17,6 +17,7 @@ import android.widget.TextView;
 import net.DeltaWings.Android.Hangman.Util.ConnectionUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -25,7 +26,7 @@ public class GameActivity extends AppCompatActivity {
 
 	private AlertDialog.Builder builder;
 	private ConnectionUtil co;
-	private TextView textView;
+	private TextView word;
 	private List<String> letters = new ArrayList<>();
 	private Context context = this;
 
@@ -47,7 +48,7 @@ public class GameActivity extends AppCompatActivity {
 		MainActivity.setTheme(this);
 		setContentView(R.layout.game_activity);
 
-		textView = findViewById(R.id.textView2);
+		word = findViewById(R.id.letters);
 		ProgressBar progressBar = findViewById(R.id.progressBar);
 		EditText input = findViewById(R.id.input);
 
@@ -112,6 +113,7 @@ public class GameActivity extends AppCompatActivity {
 
 						//get result
 						HashMap<String, String> result = co.getDatas();
+						word.setText(result.get("newWord"));
 						if(Objects.equals(result.get("status"), "won")) { //check if player won
 							//Game Won
 
@@ -142,6 +144,9 @@ public class GameActivity extends AppCompatActivity {
 									.setPositiveButton("Restart", clickListener)
 									.setNegativeButton("Quit", clickListener)
 									.show();
+						} else {
+							letters = Arrays.asList(result.get("lettersUsed"));
+							log(letters.toString());
 						}
 						//Send Letter
 						txt.setText("", TextView.BufferType.EDITABLE);
