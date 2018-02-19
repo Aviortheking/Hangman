@@ -28,6 +28,7 @@
 
     
     <attr name="drawable_people" format="reference"/>
+    <attr name="colorPrimary" format="reference"/>
     <attr name="drawable_person" format="reference"/>
 
 </resources>

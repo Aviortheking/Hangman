@@ -40,8 +40,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="64dp"
             android:layout_weight="1"
+            android:background='@drawable/ripple'
             android:elevation="0dp"
             android:text="@string/singleplayer"
+            android:textColor="@color/White"
             android:textAppearance="@style/TextAppearance.AppCompat"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             tools:layout_editor_absoluteX="142dp"/>
@@ -55,6 +57,8 @@
             android:layout_marginTop="64dp"
             android:layout_weight="1"
             android:text="@string/multiplayer"
+            android:background='@drawable/ripple'
+            android:textColor="@color/White"
             android:textAppearance="@style/TextAppearance.AppCompat"
             app:layout_constraintTop_toBottomOf="@+id/singleplayerButton"
             tools:layout_editor_absoluteX="146dp"/>
