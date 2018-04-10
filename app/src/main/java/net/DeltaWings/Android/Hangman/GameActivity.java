@@ -13,7 +13,9 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import net.DeltaWings.Android.Hangman.Util.Command;
 import net.DeltaWings.Android.Hangman.Util.ConnectionUtil;
 
 import java.util.ArrayList;
@@ -96,7 +98,7 @@ public class GameActivity extends AppCompatActivity {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				EditText txt = ((EditText) v);
-				String text = txt.getText().toString();
+				String text = txt.getText().toString().toLowerCase();
 
 
 				if(text.length() == 1) { //is letter
@@ -113,9 +115,12 @@ public class GameActivity extends AppCompatActivity {
 
 						//get result
 						HashMap<String, String> result = co.getDatas();
+						Toast.makeText(MainActivity.getInstance(), result.toString(), Toast.LENGTH_SHORT).show();
 						word.setText(result.get("newWord"));
+						new Command().execute("AFFICHER|"+result.get("newWord"));
 						if(Objects.equals(result.get("status"), "won")) { //check if player won
 							//Game Won
+							new Command().execute("AFFICHER|Tu as gagné");
 
 							DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener() {
 								@Override

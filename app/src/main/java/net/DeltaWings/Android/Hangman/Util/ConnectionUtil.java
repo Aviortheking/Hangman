@@ -37,9 +37,12 @@ public class ConnectionUtil {
 	}
 
 	public boolean sendData(HashMap<String, String> query) {
-		if(single) return gameUtil.datasReader(query);
+		if(single) {
+			System.out.println(query);
+			return gameUtil.datasReader(query);
+		}
 		else {
-			//return state
+			System.out.println(query);
 		}
 		return false;
 	}

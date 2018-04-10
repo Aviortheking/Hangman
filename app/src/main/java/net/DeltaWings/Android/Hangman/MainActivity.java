@@ -15,7 +15,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
+import net.DeltaWings.Android.Hangman.Util.Command;
 import net.DeltaWings.Android.Hangman.settings.SettingActivity;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 	    findViewById(R.id.singleplayerButton).setOnClickListener(new View.OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
+			    new Command().execute("AFFICHER|test");
 			    Toast.makeText(instance, getPref("setting_theme", getApplicationContext()), Toast.LENGTH_LONG).show();
 		    }
 	    });

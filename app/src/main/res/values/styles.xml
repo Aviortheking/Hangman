@@ -48,15 +48,22 @@
         <item name="android:colorAccent">@color/Indigo500</item>
         <item name="android:colorBackground">@color/Grey50</item>
         <item name="android:colorForeground">@color/Grey900</item>
-        <item name="android:textColorPrimary">@color/White</item>
-        <item name="android:textColorPrimaryInverse">@color/Black</item>
+        <item name="android:textColorPrimary">@color/Black</item>
+        <item name="android:textColorPrimaryInverse">@color/White</item>
         <item name="android:textColorSecondary">@color/Grey900</item>
         <item name="android:textColorSecondaryInverse">@color/White</item>
         <item name="android:navigationBarColor">@color/Blue500</item>
+        <item name="colorPrimary">@color/Blue500</item>
+        <item name="colorPrimaryDark">@color/Blue900</item>
+        <item name="colorAccent">@color/Indigo500</item>
+        <item name="android:statusBarColor">@color/Blue900</item>
+        <item name="android:windowBackground">@color/White</item>
+
+        <item name="android:textColor">@color/Black</item>
     </style>
 
 
-    
+
     <attr name="drawable_people" format="reference"/>
     <attr name="drawable_person" format="reference"/>
 

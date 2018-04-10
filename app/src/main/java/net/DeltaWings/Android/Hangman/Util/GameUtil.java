@@ -6,9 +6,18 @@ import android.widget.Toast;
 
 import net.DeltaWings.Android.Hangman.MainActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Random;
+import java.util.Scanner;
 
 public class GameUtil {
 
@@ -20,9 +29,36 @@ public class GameUtil {
 
 	public GameUtil() {
 		//Generate Word
+
+		JSONObject obj = null;
+
+		String s = "https://raw.githubusercontent.com/dwyl/english-words/master/words_dictionary.json";
+
+
+		try{
+			URL url = new URL(s);
+
+			// read from the URL
+			Scanner scan = new Scanner(url.openStream());
+			StringBuilder str = new StringBuilder();
+
+			while (scan.hasNext()) str.append(scan.nextLine());
+			scan.close();
+
+			obj = new JSONObject(str.toString());
+			int pageName = obj.getJSONObject("pageInfo").length();
+			Log.v("NTM", pageName +"");
+			Toast.makeText(MainActivity.getInstance(), pageName, Toast.LENGTH_LONG).show();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
+		word = generateRandomWords();
 		for (int i = 0; i < word.length(); i++) {
 			res.add("_");
 		}
+
 		Log.v(tag, res.toString());
 	}
 
@@ -55,12 +91,26 @@ public class GameUtil {
 			}
 		}
 		Log.v(tag, returning.toString());
-		Toast.makeText(MainActivity.getInstance(), returning.get("newWord"), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(MainActivity.getInstance(), returning.get("newWord"), Toast.LENGTH_SHORT).show();
 		return true;
 	}
 
 	public HashMap<String, String> datasSender() {
 		return returning;
+	}
+
+	public static String generateRandomWords()
+	{
+		String randomStrings;
+		Random random = new Random();
+		char[] word = new char[random.nextInt(8)+3]; // words of length 3 through 10. (1 and 2 letter words are boring.)
+		for(int j = 0; j < word.length; j++)
+		{
+			word[j] = (char)('a' + random.nextInt(26));
+		}
+		randomStrings = new String(word);
+
+		return randomStrings;
 	}
 }
 
