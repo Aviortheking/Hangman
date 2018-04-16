@@ -1,23 +1,37 @@
 package net.DeltaWings.Android.Hangman.Util;
 
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Xml;
 import android.widget.Toast;
 
 import net.DeltaWings.Android.Hangman.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 public class GameUtil {
 
@@ -35,26 +49,20 @@ public class GameUtil {
 		String s = "https://raw.githubusercontent.com/dwyl/english-words/master/words_dictionary.json";
 
 
-		try{
-			URL url = new URL(s);
+		try {
 
-			// read from the URL
-			Scanner scan = new Scanner(url.openStream());
-			StringBuilder str = new StringBuilder();
-
-			while (scan.hasNext()) str.append(scan.nextLine());
-			scan.close();
-
-			obj = new JSONObject(str.toString());
-			int pageName = obj.getJSONObject("pageInfo").length();
-			Log.v("NTM", pageName +"");
-			Toast.makeText(MainActivity.getInstance(), pageName, Toast.LENGTH_LONG).show();
-		}catch (Exception e) {
-			e.printStackTrace();
+			byte[] encoded = Files.readAllBytes(Paths.get("/sdcard/list.txt"));
+			String[] strings = new String(encoded, Charset.defaultCharset()).split("\r");
+			Log.v(tag, strings[randInt(0, strings.length-1)]);
+			word = strings[randInt(0, strings.length-1)];
+		} catch (Exception e) {
+			//ntm
 		}
 
 
-		word = generateRandomWords();
+
+
+
 		for (int i = 0; i < word.length(); i++) {
 			res.add("_");
 		}
@@ -111,6 +119,12 @@ public class GameUtil {
 		randomStrings = new String(word);
 
 		return randomStrings;
+	}
+
+	public static int randInt(int min, int max) {
+		Random rand = new Random();
+		int randomNum = rand.nextInt((max - min) + 1) + min;
+		return randomNum;
 	}
 }
 

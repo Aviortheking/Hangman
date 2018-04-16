@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -50,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
 		instance = this;
 
 	    super.onCreate(savedInstanceState);
+
+	    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+	    StrictMode.setThreadPolicy(policy);
+
 	    setTheme(this);
 	    setContentView(R.layout.activity_main);
 
