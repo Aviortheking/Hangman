@@ -49,7 +49,7 @@
             tools:layout_editor_absoluteX="142dp"/>
 
         <Button
-            android:id="@+id/multiplayerButton"
+            android:id="@+id/testsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/singleplayerButton"
@@ -58,7 +58,7 @@
             android:layout_weight="1"
             android:background="@drawable/button"
             android:textColor="?android:textColorPrimaryInverse"
-            android:text="@string/multiplayer"
+            android:text="Tests"
             android:textAppearance="@style/TextAppearance.AppCompat"
             app:layout_constraintTop_toBottomOf="@+id/singleplayerButton"
             tools:layout_editor_absoluteX="146dp"/>

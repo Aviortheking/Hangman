@@ -5,21 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import net.DeltaWings.Android.Hangman.Util.Command;
 import net.DeltaWings.Android.Hangman.settings.SettingActivity;
-
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,16 +46,12 @@ public class MainActivity extends AppCompatActivity {
 		instance = this;
 
 	    super.onCreate(savedInstanceState);
-
-	    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-	    StrictMode.setThreadPolicy(policy);
-
 	    setTheme(this);
 	    setContentView(R.layout.activity_main);
 
 
 		//Multiplayer button
-	    findViewById(R.id.multiplayerButton).setOnClickListener(new View.OnClickListener() {
+	    findViewById(R.id.singleplayerButton).setOnClickListener(new View.OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
 			    startActivity(new Intent(instance, GameActivity.class));
@@ -68,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 		    }
 	    });
 
-	    findViewById(R.id.singleplayerButton).setOnClickListener(new View.OnClickListener() {
+	    findViewById(R.id.testsButton).setOnClickListener(new View.OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
 			    new Command().execute("AFFICHER|test");
@@ -104,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
-	public static void putPref(String key, String value, Context context) {
+	public static void setPref(String key, String value, Context context) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putString(key, value);

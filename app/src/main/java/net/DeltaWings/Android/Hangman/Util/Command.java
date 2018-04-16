@@ -1,13 +1,12 @@
 package net.DeltaWings.Android.Hangman.Util;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
 import android.os.AsyncTask;
 
-import java.net.UnknownHostException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class Command extends AsyncTask<String, Integer, Long> {
 
@@ -46,13 +45,8 @@ public class Command extends AsyncTask<String, Integer, Long> {
     }
 
     //----------------------------------------------------------------------------------------------
-    public void envoyer_commande( String c ) throws IOException, ClassNotFoundException, InterruptedException {
+    public void envoyer_commande(String c) throws IOException, ClassNotFoundException, InterruptedException {
         System.out.println("\nDEBUG:\tenvoyer_commande");
-
-        String message_recu;
-        byte[] ipAddr = new byte[]{(byte)192,(byte)168,(byte)1,(byte)103};
-        InetAddress host = InetAddress.getByAddress(ipAddr);
-        int port = Integer.parseInt("53000");
 
         Socket socket = null;
         DataOutputStream dataOutputStream = null;
@@ -60,10 +54,9 @@ public class Command extends AsyncTask<String, Integer, Long> {
 
         try {
             //establish socket connection to server
-            socket = new Socket("192.168.1.2", 53000);
+            socket = new Socket("192.168.0.2", 53000);
 
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            //dataInputStream = new DataInputStream(socket.getInputStream());
 
             System.out.println("\nDEBUG:\tConnexion ok");
             System.out.println("\nDEBUG:\tdebut envoi");
@@ -71,8 +64,6 @@ public class Command extends AsyncTask<String, Integer, Long> {
             System.out.println("\nDEBUG:\tfinenvoi");
 
             System.out.println("\nDEBUG:\tdebut reception");
-            //message_recu = dataInputStream.readLine();
-            //System.out.println("\nDEBUG:\tmessage recu = " + message_recu);
             System.out.println("\nDEBUG:\tfin réception");
         }
         catch (UnknownHostException e) {

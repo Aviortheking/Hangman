@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.EditText;
@@ -16,20 +17,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.DeltaWings.Android.Hangman.Util.Command;
-import net.DeltaWings.Android.Hangman.Util.ConnectionUtil;
+import net.DeltaWings.Android.Hangman.Util.GameUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
 
 public class GameActivity extends AppCompatActivity {
 
 	private AlertDialog.Builder builder;
-	private ConnectionUtil co;
 	private TextView word;
-	private List<String> letters = new ArrayList<>();
+	static private GameUtil gameUtil;
+	private ArrayList<String> letters = new ArrayList<>();
 	private Context context = this;
 
 	@Override
@@ -50,13 +47,14 @@ public class GameActivity extends AppCompatActivity {
 		MainActivity.setTheme(this);
 		setContentView(R.layout.game_activity);
 
-		word = findViewById(R.id.letters);
+		word = findViewById(R.id.word);
 		ProgressBar progressBar = findViewById(R.id.progressBar);
 		EditText input = findViewById(R.id.input);
 
 		log("Logs");
-		log("Connecting...");
-		co = new ConnectionUtil();
+
+		gameUtil = new GameUtil();
+		word.setText(gameUtil.getUndescores().toString().replace(",", ""));
 
 		ActionBar actionBar = getSupportActionBar();
 		if (actionBar != null) {
@@ -76,10 +74,6 @@ public class GameActivity extends AppCompatActivity {
 			public void onClick(DialogInterface dialog, int which) {
 				switch (which){
 					case DialogInterface.BUTTON_POSITIVE:
-						//Close Connection
-						log("Closing connection");
-						co.closeConnection();
-
 						//send to main menu
 						finish();
 						overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -87,6 +81,14 @@ public class GameActivity extends AppCompatActivity {
 				}
 			}
 		};
+
+		//Return Builder
+		builder = new AlertDialog.Builder(context);
+
+		builder.setMessage("Do you really want to quit the game ?")
+				.setPositiveButton("Yes", dialogClickListener)
+				.setNegativeButton("No", dialogClickListener);
+		//Return Builder
 
 
 
@@ -97,11 +99,58 @@ public class GameActivity extends AppCompatActivity {
 		input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				EditText txt = ((EditText) v);
-				String text = txt.getText().toString().toLowerCase();
+				EditText editText = ((EditText) v);
+				String word = editText.getText().toString().toLowerCase();
+
+				switch (word.length()) {
+					case 0:
+						Toast.makeText(MainActivity.getInstance(), "Please type something!", Toast.LENGTH_LONG).show();
+						break;
+
+					case 1:
+						if(letters.contains(word)) { // Check si lettre déjà noté
+							Toast.makeText(MainActivity.getInstance(), "letter already used!", Toast.LENGTH_LONG).show();
+							editText.setText("");
+							break;
+						}
+						Boolean res = gameUtil.checkLetter(word);
+						if(res && gameUtil.hasWon()) { // check si joueur vainqueur
+
+							win();
+							break;
+						} else { // si joueur non vainqueur
+							letters.add(word);
+							((TextView) findViewById(R.id.letters)).setText(letters.toString().toLowerCase());
+							if(res) {
+								Toast.makeText(MainActivity.getInstance(), "Correct Letter!", Toast.LENGTH_LONG).show();
+
+								((TextView) findViewById(R.id.word)).setText(gameUtil.getUndescores().toString().replace(",", ""));
+								new Command().execute("AFFICHER|"+gameUtil.getUndescores().toString().replace(",", ""));
+							} else {
+								Toast.makeText(MainActivity.getInstance(), "Incorrect letter!", Toast.LENGTH_LONG).show();
+								//update image
+							}
+							editText.setText("");
+
+							log("You used : " + word);
+							break;
+						}
+
+					default:
+						if(gameUtil.checkWord(word)) {
+							win();
+						} else {
+							Toast.makeText(MainActivity.getInstance(), "Incorrect word!", Toast.LENGTH_LONG).show();
+							//update image
+						}
+						break;
+				}
 
 
-				if(text.length() == 1) { //is letter
+
+
+/*
+				if(word.length() == 1) { //is letter
 					if(letters.contains(text)) {
 						log("Letter : " + text + "Already in");
 					} else {
@@ -154,7 +203,7 @@ public class GameActivity extends AppCompatActivity {
 							log(letters.toString());
 						}
 						//Send Letter
-						txt.setText("", TextView.BufferType.EDITABLE);
+						editText.setText("", TextView.BufferType.EDITABLE);
 					}
 				} else if(text.length() > 1) {
 					log("Word : " + text);
@@ -163,9 +212,9 @@ public class GameActivity extends AppCompatActivity {
 					temp.put("letter", text);
 					co.sendData(temp);
 
-					txt.setText("", TextView.BufferType.EDITABLE);
+					editText.setText("", TextView.BufferType.EDITABLE);
 
-				}
+				}*/
 				return false;
 			}
 		});
@@ -176,13 +225,7 @@ public class GameActivity extends AppCompatActivity {
 
 
 
-		//Return Builder
-		builder = new AlertDialog.Builder(context);
 
-		builder.setMessage("Do you really want to quit your game ?")
-				.setPositiveButton("Yes", dialogClickListener)
-				.setNegativeButton("No", dialogClickListener);
-		//Return Builder
 
 
 
@@ -202,7 +245,39 @@ public class GameActivity extends AppCompatActivity {
 	}
 
 	private void log(String message) {
+		Log.v("GameActivity", message);
 		TextView logs = findViewById(R.id.logs);
 		logs.setText(logs.getText().toString() + "\n" + message);
+	}
+
+	private void win() {
+		new Command().execute("AFFICHER|You won !!!");
+		DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				switch (which){
+					case DialogInterface.BUTTON_POSITIVE:
+						//Close Connection
+						Intent intent = getIntent();
+						overridePendingTransition(0, 0);
+						intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+						finish();
+
+						overridePendingTransition(0, 0);
+						startActivity(intent);
+						break;
+					default:
+						finish();
+						overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+						break;
+				}
+			}
+		};
+
+		new AlertDialog.Builder(context)
+				.setMessage("You won!")
+				.setPositiveButton("Restart", clickListener)
+				.setNegativeButton("Quit", clickListener)
+				.show();
 	}
 }
