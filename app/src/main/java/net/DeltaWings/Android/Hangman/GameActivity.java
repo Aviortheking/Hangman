@@ -99,6 +99,7 @@ public class GameActivity extends AppCompatActivity {
 		input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
 				EditText editText = ((EditText) v);
 				String word = editText.getText().toString().toLowerCase();
 
@@ -129,6 +130,9 @@ public class GameActivity extends AppCompatActivity {
 							} else {
 								Toast.makeText(MainActivity.getInstance(), "Incorrect letter!", Toast.LENGTH_LONG).show();
 								//update image
+								if(letters.size() == 10) {
+									lost();
+								}
 							}
 							editText.setText("");
 
@@ -142,6 +146,9 @@ public class GameActivity extends AppCompatActivity {
 						} else {
 							Toast.makeText(MainActivity.getInstance(), "Incorrect word!", Toast.LENGTH_LONG).show();
 							//update image
+							if(letters.size() == 10) {
+								lost();
+							}
 						}
 						break;
 				}
@@ -251,7 +258,7 @@ public class GameActivity extends AppCompatActivity {
 	}
 
 	private void win() {
-		new Command().execute("AFFICHER|You won !!!");
+		new Command().execute("AFFICHER|Tu as gagné !!!");
 		DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -275,9 +282,40 @@ public class GameActivity extends AppCompatActivity {
 		};
 
 		new AlertDialog.Builder(context)
-				.setMessage("You won!")
-				.setPositiveButton("Restart", clickListener)
-				.setNegativeButton("Quit", clickListener)
+				.setMessage("Tu as gagné!")
+				.setPositiveButton("Recommencer", clickListener)
+				.setNegativeButton("Quitter", clickListener)
+				.show();
+	}
+
+	private void lost() {
+		new Command().execute("AFFICHER|Tu as perdu !!!");
+		DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				switch (which){
+					case DialogInterface.BUTTON_POSITIVE:
+						//Close Connection
+						Intent intent = getIntent();
+						overridePendingTransition(0, 0);
+						intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+						finish();
+
+						overridePendingTransition(0, 0);
+						startActivity(intent);
+						break;
+					default:
+						finish();
+						overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+						break;
+				}
+			}
+		};
+
+		new AlertDialog.Builder(context)
+				.setMessage("Tu as perdu :( !")
+				.setPositiveButton("Recommencer", clickListener)
+				.setNegativeButton("Quitter", clickListener)
 				.show();
 	}
 }

@@ -46,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
 		instance = this;
 
 	    super.onCreate(savedInstanceState);
+
+	    if(getPref("setting_theme", this.getApplicationContext()) != "Color") {
+	    	setPref("setting_theme", "Color", this.getApplicationContext());
+	    }
+
 	    setTheme(this);
 	    setContentView(R.layout.activity_main);
 

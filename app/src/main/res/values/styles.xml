@@ -26,16 +26,19 @@
         <!-- Custom Elements -->
 
         <!-- Android -->
+        <item name="android:textColor">@color/Black</item>
+        <item name="android:textColorPrimary">@color/Black</item>
+        <item name="android:textColorPrimaryInverse">@color/Black</item>
         <item name="android:colorBackground">@color/Grey50</item>
         <item name="android:windowBackground">@color/Grey50</item>
         <item name="android:colorAccent">@color/BlueGrey500</item>
-        <item name="android:textColorPrimary">@color/Grey900</item>
 
     </style>
 
     <style name="DeltaWings.Color" parent="Theme.AppCompat.Light">
 
         <!-- Drawables -->
+
         <item name="drawable_people">@drawable/people</item>
         <item name="drawable_person">@drawable/person</item>
 

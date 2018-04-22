@@ -65,6 +65,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.50"
+                android:contentDescription="image"
                 app:srcCompat="@mipmap/logo"/>
         </LinearLayout>
 
@@ -73,7 +74,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
-            android:text="null"
             android:textAlignment="center"
             android:textSize="36sp"
             android:textStyle="bold"/>
@@ -84,13 +84,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
             android:ems="10"
+            android:hint="Écrit une lettre/un mot"
             android:inputType="textPersonName"
             android:maxLength="16"
             android:maxLines="1"
             android:selectAllOnFocus="false"
-            android:windowSoftInputMode="adjustResize|adjustPan"
-            android:text="Name"
             android:textAlignment="center"
+            android:textAllCaps="false"
             android:textSize="36sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

@@ -21,6 +21,7 @@
 
     <string name="setting_general_theme">Theme</string>
     <string name="setting_general_ip">Select the server IP</string>
+    <string name="setting_general_port">Select the server port</string>
 
     <string name="setting_single_title">Singleplayer</string>
     <string name="setting_single_desc">Singleplayer Configuration</string>

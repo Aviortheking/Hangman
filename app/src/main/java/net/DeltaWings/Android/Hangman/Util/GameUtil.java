@@ -5,9 +5,10 @@ import android.util.Log;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -26,13 +27,13 @@ public class GameUtil {
 
 		JSONObject obj = null;
 
-		String s = "https://raw.githubusercontent.com/dwyl/english-words/master/words_dictionary.json";
 
 		String r = "";
 		StringBuilder sb = new StringBuilder();
 		ArrayList<String> list = new ArrayList<>();
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("/sdcard/list.txt"));
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("/sdcard/list.txt"), "UTF-8"));
 
 			String line = br.readLine();
 

@@ -28,7 +28,7 @@
             android:name=".GameActivity"
             android:theme="@style/DeltaWings.Color"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan">
+            android:windowSoftInputMode="stateAlwaysVisible|adjustResize">
         </activity>
         <activity
             android:name=".settings.SettingActivity"
