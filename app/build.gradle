@@ -4,7 +4,7 @@ android {
     buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "net.DeltaWings.Android.Hangman"
-        minSdkVersion 26
+        minSdkVersion 14
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -19,12 +19,12 @@ android {
     }
 }
 dependencies {
-    implementation 'com.android.support:support-v4:27.0.2'
+    implementation 'com.android.support:support-v4:27.1.1'
     api fileTree(include: ['*.jar'], dir: 'libs')
-    api 'com.android.support:appcompat-v7:27.0.2'
-    api 'com.android.support.constraint:constraint-layout:1.0.2'
-    api 'com.android.support:design:27.0.2'
-    api 'com.android.support:support-vector-drawable:27.0.2'
+    api 'com.android.support:appcompat-v7:27.1.1'
+    api 'com.android.support.constraint:constraint-layout:1.1.0'
+    api 'com.android.support:design:27.1.1'
+    api 'com.android.support:support-vector-drawable:27.1.1'
 }
 
 repositories {
