@@ -25,11 +25,6 @@ public class GameUtil {
 	public GameUtil() {
 		//Generate Word
 
-		JSONObject obj = null;
-
-
-		String r = "";
-		StringBuilder sb = new StringBuilder();
 		ArrayList<String> list = new ArrayList<>();
 		try {
 
@@ -39,11 +34,8 @@ public class GameUtil {
 
 			while (line != null) {
 				list.add(line);
-				sb.append(line);
-				sb.append(System.lineSeparator());
 				line = br.readLine();
 			}
-			r = sb.toString();
 			br.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -82,7 +74,7 @@ public class GameUtil {
 		if(this.word.contains(letter)) {
 			Log.v(tag, "Letter Found !");
 			for (int i = 0; i < this.word.length(); i++) {
-				if(Objects.equals(String.valueOf(this.word.charAt(i)), letter)) {
+				if(String.valueOf(this.word.charAt(i)).equals(letter)) {
 					res.set(i, letter);
 				}
 			}
@@ -92,7 +84,7 @@ public class GameUtil {
 	}
 
 	public boolean checkWord(String word) {
-		if(Objects.equals(word, this.word)) {
+		if(word.equals(this.word)) {
 			for (int i = 0; i < word.length(); i++) {
 				res.set(i, word.split("")[i]);
 			}
@@ -113,5 +105,9 @@ public class GameUtil {
 
 	public ArrayList<String> getUndescores() {
 		return res;
+	}
+
+	public String solution() {
+		return word;
 	}
 }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.animation.DecelerateInterpolator;
@@ -27,6 +28,7 @@ public class GameActivity extends AppCompatActivity {
 	private TextView word;
 	static private GameUtil gameUtil;
 	private ArrayList<String> letters = new ArrayList<>();
+	private ArrayList<String> good = new ArrayList<>();
 	private Context context = this;
 
 	@Override
@@ -54,7 +56,7 @@ public class GameActivity extends AppCompatActivity {
 		log("Logs");
 
 		gameUtil = new GameUtil();
-		word.setText(gameUtil.getUndescores().toString().replace(",", ""));
+		word.setText(TextUtils.join("", gameUtil.getUndescores()));
 
 		ActionBar actionBar = getSupportActionBar();
 		if (actionBar != null) {
@@ -121,16 +123,21 @@ public class GameActivity extends AppCompatActivity {
 							break;
 						} else { // si joueur non vainqueur
 							letters.add(word);
-							((TextView) findViewById(R.id.letters)).setText(letters.toString().toLowerCase());
+							good.add(word);
+							((TextView) findViewById(R.id.letters)).setText(TextUtils.join(", ", letters).toLowerCase());
 							if(res) {
 								Toast.makeText(MainActivity.getInstance(), "Correct Letter!", Toast.LENGTH_LONG).show();
 
-								((TextView) findViewById(R.id.word)).setText(gameUtil.getUndescores().toString().replace(",", ""));
-								new Command().execute("AFFICHER|"+gameUtil.getUndescores().toString().replace(",", ""));
+								((TextView) findViewById(R.id.word)).setText(TextUtils.join("", gameUtil.getUndescores()));
+
+								new Command().execute("LEADING|A");
+								new Command().execute("LAGGING|A");
+								new Command().execute("COULEUR|J");
+								new Command().execute("AFFICHER|"+TextUtils.join("", gameUtil.getUndescores()));
 							} else {
 								Toast.makeText(MainActivity.getInstance(), "Incorrect letter!", Toast.LENGTH_LONG).show();
 								//update image
-								if(letters.size() == 10) {
+								if(letters.size()-good.size() == 10) {
 									lost();
 								}
 							}
@@ -146,7 +153,7 @@ public class GameActivity extends AppCompatActivity {
 						} else {
 							Toast.makeText(MainActivity.getInstance(), "Incorrect word!", Toast.LENGTH_LONG).show();
 							//update image
-							if(letters.size() == 10) {
+							if(letters.size()-good.size() == 10) {
 								lost();
 							}
 						}
@@ -258,6 +265,7 @@ public class GameActivity extends AppCompatActivity {
 	}
 
 	private void win() {
+		new Command().execute("COULEUR|F");
 		new Command().execute("AFFICHER|Tu as gagné !!!");
 		DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener() {
 			@Override
@@ -289,6 +297,7 @@ public class GameActivity extends AppCompatActivity {
 	}
 
 	private void lost() {
+		new Command().execute("COULEUR|B");
 		new Command().execute("AFFICHER|Tu as perdu !!!");
 		DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener() {
 			@Override
@@ -313,7 +322,7 @@ public class GameActivity extends AppCompatActivity {
 		};
 
 		new AlertDialog.Builder(context)
-				.setMessage("Tu as perdu :( !")
+				.setMessage("Tu as perdu, le mot était : " + gameUtil.solution())
 				.setPositiveButton("Recommencer", clickListener)
 				.setNegativeButton("Quitter", clickListener)
 				.show();
