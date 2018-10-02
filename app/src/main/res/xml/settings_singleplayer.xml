@@ -5,5 +5,5 @@
         android:entries="@array/setting_difficulty"
         android:entryValues="@array/setting_difficulty"
         android:key="setting_difficulty"
-        android:title="@string/setting_single_difficulty"/>
+        android:title="@string/setting_general_difficulty"/>
 </PreferenceScreen>

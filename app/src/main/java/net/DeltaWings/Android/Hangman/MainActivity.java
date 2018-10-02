@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
 	    super.onCreate(savedInstanceState);
 
-	    if(getPref("setting_theme", this.getApplicationContext()) != "Color") {
+	    if(getPref("setting_theme", MainActivity.getInstance()) != "Color") {
 	    	setPref("setting_theme", "Color", this.getApplicationContext());
 	    }
 
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 		    @Override
 		    public void onClick(View v) {
 			    new Command().execute("AFFICHER|test");
-			    Toast.makeText(instance, getPref("setting_theme", getApplicationContext()), Toast.LENGTH_LONG).show();
+			    Toast.makeText(instance, getPref("setting_theme", MainActivity.getInstance()), Toast.LENGTH_LONG).show();
 		    }
 	    });
 
@@ -107,12 +107,12 @@ public class MainActivity extends AppCompatActivity {
 		editor.apply();
 	}
 
-	public static String getPref(String key, Context context) {
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-		return preferences.getString(key, null);
+	public static String getPref(String key, Activity context) {
+		SharedPreferences sharedPref=context.getPreferences(Context.MODE_PRIVATE);
+		return sharedPref.getString(key, "pokemon");
 	}
 
 	public static void setTheme(Activity activity) {
-		activity.setTheme(activity.getResources().getIdentifier("DeltaWings."+getPref("setting_theme", activity.getApplicationContext()), "style", activity.getPackageName()));
+		activity.setTheme(activity.getResources().getIdentifier("DeltaWings."+getPref("setting_theme", MainActivity.getInstance()), "style", activity.getPackageName()));
 	}
 }

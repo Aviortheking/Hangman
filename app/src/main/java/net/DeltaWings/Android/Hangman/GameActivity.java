@@ -4,7 +4,9 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -55,8 +57,16 @@ public class GameActivity extends AppCompatActivity {
 
 		log("Logs");
 
-		gameUtil = new GameUtil();
+		SharedPreferences sharedPref=getPreferences(Context.MODE_PRIVATE);
+		String userName= sharedPref.getString("settting_difficulty", "0");
+
+		gameUtil = new GameUtil( Integer.parseInt(userName));
 		word.setText(TextUtils.join("", gameUtil.getUndescores()));
+		new Command().execute("LEADING|A");
+		new Command().execute("LAGGING|A");
+		new Command().execute("COULEUR|J");
+		new Command().execute("AFFICHER|"+TextUtils.join("", gameUtil.getUndescores()));
+
 
 		ActionBar actionBar = getSupportActionBar();
 		if (actionBar != null) {

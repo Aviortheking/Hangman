@@ -23,10 +23,10 @@
     <string name="setting_general_ip">Select the server IP</string>
     <string name="setting_general_port">Select the server port</string>
 
+    <string name="setting_general_difficulty">Difficulty</string>
+
     <string name="setting_single_title">Singleplayer</string>
     <string name="setting_single_desc">Singleplayer Configuration</string>
-
-    <string name="setting_single_difficulty">Difficulty</string>
 
     <string name="setting_multi_title">Multiplayer</string>
     <string name="setting_multi_desc">Multiplayer Configuration</string>

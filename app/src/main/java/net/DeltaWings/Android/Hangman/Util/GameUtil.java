@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
@@ -20,9 +21,22 @@ public class GameUtil {
 	private ArrayList<String> res = new ArrayList<>();
 	private ArrayList<String> letters = new ArrayList<>();
 	private HashMap<String, String> returning = new HashMap<>();
+	private Integer difficulty;
 	private String tag = "GameUtil";
+	private String[][] replacements = {
+			{"é", "e"},
+			{"è", "e"},
+			{"ê", "e"},
+			{"î", "i"},
+			{"ï", "i"},
+			{"à", "a"},
+			{"ç", "c"}
+	};
+	private String excluded = "aeyuio";
+	private String accentexcluded = "âäàéèïî";
 
-	public GameUtil() {
+	public GameUtil(Integer difficulty) {
+		this.difficulty = difficulty;
 		//Generate Word
 
 		ArrayList<String> list = new ArrayList<>();
@@ -61,21 +75,38 @@ public class GameUtil {
 
 
 
+		for (String lett: word.split("")) {
+			Log.v(tag, lett);
+			if(difficulty == 0 && (excluded.contains(lett) || accentexcluded.contains(lett))) {
+				res.add(lett);
+				Log.v(tag, "excluded || accentexcluded");
 
+			}
+			else {
+				Log.v(tag, "other");
 
-		for (int i = 0; i < word.length(); i++) {
-			res.add("_");
+				res.add("_");
+			}
 		}
 
 		Log.v(tag, res.toString());
 	}
 
 	public boolean checkLetter(String letter) {
+		/*if(difficulty == 1) {
+			for(String[] replacement: replacements) {
+				Log.v(tag, Arrays.toString(replacement));
+				letter = letter.replace(replacement[0], replacement[1]);
+			}
+		}*/
 		if(this.word.contains(letter)) {
 			Log.v(tag, "Letter Found !");
 			for (int i = 0; i < this.word.length(); i++) {
 				if(String.valueOf(this.word.charAt(i)).equals(letter)) {
-					res.set(i, letter);
+					Log.v(tag, i +"");
+					Log.v(tag, letter);
+					Log.v(tag, String.valueOf(this.word.charAt(i)));
+					res.set(i+1, letter);
 				}
 			}
 			return true;

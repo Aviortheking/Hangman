@@ -18,4 +18,10 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/setting_general_port"/>
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/setting_difficulty"
+        android:entryValues="@array/setting_difficulty"
+        android:key="setting_difficulty"
+        android:title="@string/setting_general_difficulty"/>
 </PreferenceScreen>
